@@ -1,12 +1,12 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';       // ✅ falta este
+import { ReactiveFormsModule } from '@angular/forms'; // ✅ este ya lo tienes
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css'],
+  imports: [RouterOutlet, ReactiveFormsModule] // ✅ ahora sí reconoce RouterOutlet
 })
-export class App {
-  protected readonly title = signal('proyecto1');
-}
+export class App {}
