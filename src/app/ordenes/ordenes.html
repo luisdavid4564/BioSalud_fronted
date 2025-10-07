@@ -1,0 +1,166 @@
+<div class="container ordenes-container">
+
+    <!-- Tabla de Órdenes -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">
+                        {{ mostrarCanceladas ? 'Lista de Órdenes Canceladas' : 'Lista de Órdenes Médicas' }}
+                    </h5>
+
+                    <div class="d-flex gap-2">
+                        <button *ngIf="!mostrarCanceladas" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#newOrderModal" (click)="nuevaOrden()">
+                            <i class="bx bx-plus me-1"></i> Nueva Orden
+                        </button>
+
+
+                        <button *ngIf="!mostrarCanceladas" class="btn btn-danger" (click)="verOrdenesCanceladas()">
+                            <i class="bx bx-block me-1"></i> Órdenes Canceladas
+                        </button>
+
+                        <button *ngIf="mostrarCanceladas" class="btn btn-secondary" (click)="verOrdenesCanceladas()">
+                            <i class="bx bx-undo me-1"></i> Volver a Activas
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <div class="card-body">
+                    <form class="row g-3 mb-3" (ngSubmit)="searchOrders()">
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" placeholder="Nombre Doctor" [(ngModel)]="NombreDoctor"
+                                name="Nombre Doctor" />
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" placeholder="Nombre Paciente" [(ngModel)]="NombrePaciente"
+                                name="Nombre Paciente" />
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" [(ngModel)]="speciality" name="speciality">
+                                <option value="">Selecciona la Especialidad</option>
+                                <option value="Hematología">Hematología</option>
+                                <option value="Radiología">Radiología</option>
+                                <option value="Medicina General">Medicina General</option>
+                                <option value="Cardiología">Cardiología</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-center">
+                            <button type="submit" class="btn btn-primary w-100">Buscar</button>
+                        </div>
+                    </form>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID Orden</th>
+                                    <th>Paciente</th>
+                                    <th>Doctor</th>
+                                    <th>Tipo de Orden</th>
+                                    <th>Fecha Solicitud</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let order of filteredOrders">
+                                    <td>{{ order.id }}</td>
+                                    <td>{{ order.patient }}</td>
+                                    <td>{{ order.doctor }}</td>
+                                    <td>{{ order.type }}</td>
+                                    <td>{{ order.date }}</td>
+                                    <td>
+                                        <span class="badge" [ngClass]="{
+                            'bg-success': order.status === 'Completada',
+                            'bg-warning': order.status === 'Pendiente',
+                            'bg-info': order.status === 'En Progreso',
+                            'bg-danger': order.status === 'Cancelada'
+                        }">{{ order.status }}</span>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary me-1">
+                                            <i class="bx bx-show"></i> Ver
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-secondary"
+                                            (click)="modificarOrden(order.id)" data-bs-toggle="modal"
+                                            data-bs-target="#newOrderModal">
+                                            <i class="bx bx-edit"></i> Editar
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="newOrderModal" tabindex="-1" aria-labelledby="newOrderModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="newOrderModalLabel">
+                                    {{ editando ? 'Editar Orden' : 'Nueva Orden' }}
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Cerrar"></button>
+                            </div>
+
+                            <form [formGroup]="ordenForm" (ngSubmit)="registrarOrden()">
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label class="form-label">Paciente</label>
+                                        <input type="text" class="form-control" formControlName="patient" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Doctor</label>
+                                        <input type="text" class="form-control" formControlName="doctor" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Especialidad</label>
+                                        <input type="text" class="form-control" formControlName="speciality" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Tipo de Orden</label>
+                                        <input type="text" class="form-control" formControlName="type" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Fecha</label>
+                                        <input type="date" class="form-control" formControlName="date" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Estado</label>
+                                        <select class="form-select" formControlName="status">
+                                            <option value="Pendiente">Pendiente</option>
+                                            <option value="En Progreso">En Progreso</option>
+                                            <option value="Completada">Completada</option>
+                                            <option value="Cancelada">Cancelada</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancelar</button>
+
+                                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
+                                        {{ editando ? 'Actualizar' : 'Guardar' }}
+                                    </button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

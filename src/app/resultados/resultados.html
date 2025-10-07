@@ -1,0 +1,180 @@
+<div class="container resultados-container">
+
+  <!-- Encabezado -->
+  <div class="card shadow-sm border-0 rounded-3">
+    <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+      <h5 class="mb-0 fw-bold">
+        <i class="text-primary me-2"></i>
+        Lista de Resultados de Laboratorio
+      </h5>
+      <div>
+        <button class="btn btn-success btn-sm me-2"
+                (click)="agregarNuevoResultado()"
+                data-bs-toggle="modal" data-bs-target="#modalEditarGrid">
+          <i class="ri-add-line me-1"></i>Agregar Nuevo
+        </button>
+        <button class="btn btn-outline-primary btn-sm" (click)="filtrarResultados()">
+          <i class="ri-refresh-line me-1"></i>Actualizar
+        </button>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row g-3 mb-3">
+        <div class="col-md-3">
+          <input type="text" class="form-control" placeholder="Filtrar por Paciente"
+                 [(ngModel)]="filtroPaciente" (input)="filtrarResultados()" />
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control" placeholder="Filtrar por Médico"
+                 [(ngModel)]="filtroMedico" (input)="filtrarResultados()" />
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" [(ngModel)]="filtroValidado" (change)="filtrarResultados()">
+            <option value="">Todos</option>
+            <option value="validado">Validados</option>
+            <option value="no-validado">No Validados</option>
+          </select>
+        </div>
+        <div class="col-md-3 d-flex justify-content-end">
+          <button class="btn btn-primary" (click)="limpiarFiltros()">
+            <i class="ri-search-line me-1"></i> Limpiar Filtros
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabla -->
+      <div class="table-responsive">
+        <table class="table align-middle table-hover modern-table">
+          <thead>
+            <tr>
+              <th>ID Resultado</th>
+              <th>ID Orden</th>
+              <th>Paciente</th>
+              <th>Médico</th>
+              <th>Fecha Resultado</th>
+              <th>Descripción</th>
+              <th>Valores</th>
+              <th>Conclusiones</th>
+              <th class="text-center">Validado</th>
+              <th class="text-center">Entregado</th>
+              <th class="text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let resultado of filteredResultados">
+              <td><span class="badge bg-light text-dark">{{ resultado.idResultado }}</span></td>
+              <td><span class="badge bg-info-subtle text-info">{{ resultado.idOrden }}</span></td>
+              <td>{{ resultado.paciente }}</td>
+              <td>{{ resultado.medico }}</td>
+              <td>{{ resultado.fechaResultado }}</td>
+              <td><span class="badge bg-secondary-subtle text-secondary">{{ resultado.descripcion }}</span></td>
+              <td>{{ resultado.valores }}</td>
+              <td>{{ resultado.conclusiones }}</td>
+              <td class="text-center">
+                <span class="badge" [ngClass]="{'bg-success': resultado.validado, 'bg-warning': !resultado.validado}">
+                  {{ resultado.validado ? 'Sí' : 'No' }}
+                </span>
+              </td>
+              <td class="text-center">
+                <span class="badge" [ngClass]="{'bg-success': resultado.entregado, 'bg-warning': !resultado.entregado}">
+                  {{ resultado.entregado ? 'Sí' : 'No' }}
+                </span>
+              </td>
+              <td class="text-center">
+                <div class="d-flex justify-content-center gap-2">
+                  <button class="btn btn-outline-primary btn-sm" title="Editar"
+                    (click)="editarResultado(resultado)"
+                    [disabled]="resultado.validado"
+                    data-bs-toggle="modal" data-bs-target="#modalEditarGrid">
+                    <i class="ri-edit-line"></i>
+                  </button>
+
+                  <button class="btn btn-outline-success btn-sm" title="Validar"
+                    [disabled]="resultado.validado"
+                    (click)="validarResultado(resultado)">
+                    <i class="ri-checkbox-circle-line"></i>
+                  </button>
+
+                  <button class="btn btn-outline-danger btn-sm" title="PDF"
+                    (click)="generarPDF(resultado)">
+                    <i class="ri-file-pdf-line"></i>
+                  </button>
+
+                  <button class="btn btn-outline-secondary btn-sm" title="Entrega"
+                    (click)="registrarEntrega(resultado)"
+                    [disabled]="resultado.entregado">
+                    <i class="ri-truck-line"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalEditarGrid" tabindex="-1"
+     aria-labelledby="modalEditarGridLabel" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold" id="modalEditarGridLabel">
+          <i class="ri-edit-2-line me-1 text-primary"></i>
+          {{ resultadoEditando ? 'Editar Resultado' : 'Agregar Nuevo Resultado' }}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <form [formGroup]="resultadoForm" (ngSubmit)="guardarResultado()">
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-xxl-6">
+              <div>
+                <label class="form-label">Descripción</label>
+                <input type="text" class="form-control" formControlName="descripcion"
+                       placeholder="Descripción del resultado">
+              </div>
+            </div>
+
+            <div class="col-xxl-6">
+              <div>
+                <label class="form-label">Fecha Resultado</label>
+                <input type="date" class="form-control" formControlName="fechaResultado">
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div>
+                <label class="form-label">Valores</label>
+                <textarea class="form-control" formControlName="valores" rows="3"
+                          placeholder="Ej: Glóbulos rojos: 4.5 millones"></textarea>
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div>
+                <label class="form-label">Conclusiones</label>
+                <textarea class="form-control" formControlName="conclusiones" rows="3"
+                          placeholder="Ej: Resultado dentro de parámetros normales"></textarea>
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div class="hstack gap-2 justify-content-end mt-3">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
+                  {{ resultadoEditando ? 'Guardar Cambios' : 'Agregar Resultado' }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

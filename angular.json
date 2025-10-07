@@ -21,31 +21,29 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
-              },
-              {
-                "glob": "**/*",
-                "input": "assets",
-                "output": "/assets"
+                "input": "public",
+                "output": "/"
               }
             ],
             "styles": [
-              "assets/css/bootstrap.min.css",
-              "assets/css/icons.min.css",
-              "assets/css/app.min.css",
-              "assets/css/custom.min.css",
+              "public/assets/css/bootstrap.min.css",
+              "public/assets/css/icons.min.css",
+              "public/assets/css/app.min.css",
+              "public/assets/css/custom.min.css",
               "src/styles.css"
             ],
             "scripts": [
-              "assets/libs/bootstrap/js/bootstrap.bundle.min.js",
-              "assets/libs/simplebar/simplebar.min.js",
-              "assets/libs/node-waves/waves.min.js",
-              "assets/libs/feather-icons/feather.min.js",
-              "assets/js/pages/plugins/lord-icon-2.1.0.js",
-              "assets/js/plugins.js",
-              "assets/libs/particles.js/particles.js",
-              "assets/js/pages/particles.app.js",
-              "assets/js/pages/password-addon.init.js"
+              "public/assets/libs/bootstrap/js/bootstrap.bundle.min.js",
+              "public/assets/libs/simplebar/simplebar.min.js",
+              "public/assets/libs/node-waves/waves.min.js",
+              "public/assets/libs/feather-icons/feather.min.js",
+              "public/assets/js/pages/plugins/lord-icon-2.1.0.js",
+              "public/assets/js/plugins.js",
+              "public/assets/js/layout.js",
+              "public/assets/js/app.js",
+              "public/assets/libs/particles.js/particles.js",
+              "public/assets/js/pages/particles.app.js",
+              "public/assets/js/pages/password-addon.init.js"
             ]
           },
           "configurations": {
@@ -98,31 +96,29 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
-              },
-              {
-                "glob": "**/*",
-                "input": "assets",
-                "output": "/assets"
+                "input": "public",
+                "output": "/"
               }
             ],
             "styles": [
-              "assets/css/bootstrap.min.css",
-              "assets/css/icons.min.css",
-              "assets/css/app.min.css",
-              "assets/css/custom.min.css",
+              "public/assets/css/bootstrap.min.css",
+              "public/assets/css/icons.min.css",
+              "public/assets/css/app.min.css",
+              "public/assets/css/custom.min.css",
               "src/styles.css"
             ],
             "scripts": [
-              "assets/libs/bootstrap/js/bootstrap.bundle.min.js",
-              "assets/libs/simplebar/simplebar.min.js",
-              "assets/libs/node-waves/waves.min.js",
-              "assets/libs/feather-icons/feather.min.js",
-              "assets/js/pages/plugins/lord-icon-2.1.0.js",
-              "assets/js/plugins.js",
-              "assets/libs/particles.js/particles.js",
-              "assets/js/pages/particles.app.js",
-              "assets/js/pages/password-addon.init.js"
+              "public/assets/libs/bootstrap/js/bootstrap.bundle.min.js",
+              "public/assets/libs/simplebar/simplebar.min.js",
+              "public/assets/libs/node-waves/waves.min.js",
+              "public/assets/libs/feather-icons/feather.min.js",
+              "public/assets/js/pages/plugins/lord-icon-2.1.0.js",
+              "public/assets/js/plugins.js",
+              "public/assets/js/layout.js",
+              "public/assets/js/app.js",
+              "public/assets/libs/particles.js/particles.js",
+              "public/assets/js/pages/particles.app.js",
+              "public/assets/js/pages/password-addon.init.js"
             ]
           }
         }

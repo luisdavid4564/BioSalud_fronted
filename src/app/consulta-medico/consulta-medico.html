@@ -1,0 +1,76 @@
+<div class="container consulta-medico-container">
+
+  <!-- Login Form -->
+  <div *ngIf="!loggedIn" class="card shadow-sm border-0 rounded-3">
+    <div class="card-header bg-white border-0">
+      <h5 class="mb-0 fw-bold">
+        <i class="ri-user-line me-2 text-primary"></i>
+        Inicio de Sesión para Médicos
+      </h5>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="login()">
+        <div class="mb-3">
+          <label class="form-label">Usuario</label>
+          <input type="text" class="form-control" [(ngModel)]="username" name="username" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Contraseña</label>
+          <input type="password" class="form-control" [(ngModel)]="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Results View -->
+  <div *ngIf="loggedIn" class="card shadow-sm border-0 rounded-3">
+    <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+      <h5 class="mb-0 fw-bold">
+        <i class="ri-file-list-line me-2 text-primary"></i>
+        Consulta de Resultados
+      </h5>
+      <button class="btn btn-outline-danger btn-sm" (click)="logout()">
+        <i class="ri-logout-box-line me-1"></i>Cerrar Sesión
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <input type="text" class="form-control" placeholder="Filtrar por Paciente"
+               [(ngModel)]="filtroPaciente" (input)="filtrarResultados()">
+      </div>
+      <div class="table-responsive">
+        <table class="table align-middle table-hover modern-table">
+          <thead>
+            <tr>
+              <th>ID Resultado</th>
+              <th>Paciente</th>
+              <th>Fecha</th>
+              <th>Descripción</th>
+              <th>Validado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let resultado of filteredResultados">
+              <td>{{ resultado.idResultado }}</td>
+              <td>{{ resultado.paciente }}</td>
+              <td>{{ resultado.fechaResultado }}</td>
+              <td>{{ resultado.descripcion }}</td>
+              <td>
+                <span class="badge" [ngClass]="{'bg-success': resultado.validado, 'bg-warning': !resultado.validado}">
+                  {{ resultado.validado ? 'Sí' : 'No' }}
+                </span>
+              </td>
+              <td>
+                <button class="btn btn-outline-primary btn-sm" (click)="verResultado(resultado)">
+                  <i class="ri-eye-line"></i> Ver
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+.dashboard-container {
+    padding: 10px;
+    max-width: 1380px;
+    margin: 0 auto;
+}
+
+/* Shortcuts card buttons */
+.card-body button.btn {
+    border-radius: 20px;
+    background-color: #5a7bbf;
+    border: none;
+    color: white;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.card-body button.btn:hover {
+    background-color: #3e5a9a;
+}
+
+/* Calendar styles */
+.calendar {
+    font-family: Arial, sans-serif;
+}
+
+.calendar-header {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.calendar-day {
+    padding: 8px 0;
+    text-align: center;
+    border-radius: 6px;
+    cursor: default;
+}
+
+.calendar-day-header {
+    font-weight: 700;
+    color: #666;
+}
+
+.calendar-day.today {
+    background-color: #cce5ff;
+    font-weight: 700;
+    border: 1px solid #339af0;
+}
+
+.calendar-day.has-activity {
+    background-color: #5a7bbf;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}

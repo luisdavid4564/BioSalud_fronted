@@ -1,0 +1,60 @@
+<div class="container reportes-container">
+
+  <div class="card shadow-sm border-0 rounded-3">
+    <div class="card-header bg-white border-0">
+      <h5 class="mb-0 fw-bold">
+        <i class="ri-bar-chart-line me-2 text-primary"></i>
+        Reportes de Laboratorio
+      </h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3 mb-4">
+        <div class="col-md-4">
+          <label class="form-label">Fecha Inicio</label>
+          <input type="date" class="form-control" [(ngModel)]="fechaInicio">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Fecha Fin</label>
+          <input type="date" class="form-control" [(ngModel)]="fechaFin">
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+          <button class="btn btn-primary" (click)="generarReporte()">
+            <i class="ri-file-pdf-line me-1"></i>Generar PDF
+          </button>
+          <button class="btn btn-success ms-2" (click)="exportarExcel()">
+            <i class="ri-file-excel-line me-1"></i>Exportar Excel
+          </button>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="card text-center">
+            <div class="card-body">
+              <h3 class="text-primary">{{ examenesRealizados }}</h3>
+              <p class="mb-0">Exámenes Realizados</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card text-center">
+            <div class="card-body">
+              <h3 class="text-success">{{ tiempoPromedio }}</h3>
+              <p class="mb-0">Tiempo Promedio</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h6>Exámenes Más Solicitados</h6>
+              <ul class="list-unstyled">
+                <li *ngFor="let examen of examenesMasSolicitados">{{ examen }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

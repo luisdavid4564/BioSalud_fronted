@@ -1,0 +1,173 @@
+<div class="container toma-muestra-container">
+
+  <!-- Encabezado -->
+  <div class="card shadow-sm border-0 rounded-3">
+    <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+      <h5 class="mb-0 fw-bold">
+        <i class="ri-stethoscope-fill text-primary me-2"></i>
+        Lista de Toma de Muestras
+      </h5>
+      <div>
+        <button class="btn btn-success btn-sm me-2" data-bs-toggle="modal" data-bs-target="#nuevaTomaModal">
+          <i class="ri-add-line me-1"></i> Agregar Nueva
+        </button>
+        <button class="btn btn-outline-primary btn-sm">
+          <i class="ri-refresh-line me-1"></i>Actualizar
+        </button>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row g-3 mb-3">
+        <div class="col-md-4">
+          <input type="text" class="form-control" placeholder="Nombre Paciente" [(ngModel)]="NombrePaciente"
+            (input)="searchOrdenes()" />
+        </div>
+        <div class="col-md-4">
+          <input type="text" class="form-control" placeholder="Tipo de Examen" [(ngModel)]="TipoExamen"
+            (input)="searchOrdenes()" />
+        </div>
+        <div class="col-md-4 d-flex justify-content-end">
+          <button class="btn btn-primary">
+            <i class="ri-search-line me-1"></i> Buscar
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabla -->
+      <div class="table-responsive">
+        <table class="table align-middle table-hover modern-table">
+          <thead>
+            <tr>
+              <th>ID Orden</th>
+              <th>Paciente</th>
+              <th>Doctor</th>
+              <th>Tipo de Examen</th>
+              <th>Fecha Solicitud</th>
+              <th>Estado</th> 
+              <th class="text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let orden of filteredOrdenes">
+              <td><span class="badge bg-light text-dark">{{ orden.id }}</span></td>
+              <td>{{ orden.patient }}</td>
+              <td>{{ orden.doctor }}</td>
+              <td><span class="badge bg-info-subtle text-info">{{ orden.type }}</span></td>
+              <td>{{ orden.date }}</td>
+
+              <td>
+                <span [ngClass]="{
+                    'badge bg-warning text-dark': orden.estado === 'Pendiente',
+                    'badge bg-success': orden.estado === 'Muestra tomada',
+                    'badge bg-info text-dark': orden.estado === 'En análisis',
+                    'badge bg-secondary': orden.estado === 'Finalizado'
+                  }">
+                  {{ orden.estado }}
+                </span>
+              </td>
+
+              <td class="text-center">
+                <button class="btn btn-sm btn-success d-flex align-items-center" data-bs-toggle="modal"
+                  data-bs-target="#registroTomaModal" [disabled]="orden.estado !== 'Pendiente'"
+                  (click)="abrirRegistroToma(orden)"> 
+                  <i class="ri-flask-fill me-1"></i> Registrar Toma
+                </button>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="registroTomaModal" tabindex="-1" aria-labelledby="registroTomaModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="registroTomaModalLabel">Registrar Toma de Muestra</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <form [formGroup]="tomaForm" (ngSubmit)="registrarToma()">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">ID Orden</label>
+              <input type="text" class="form-control" [value]="ordenSeleccionada?.id" readonly />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Tipo de Muestra</label>
+              <input type="text" class="form-control" formControlName="tipoMuestra"
+                placeholder="Ej: Sangre, Orina, Biopsia" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Técnico Responsable</label>
+              <select class="form-select" formControlName="idTecnico">
+                <option value="">Seleccione un técnico</option>
+                <option *ngFor="let tecnico of tecnicos" [value]="tecnico">{{ tecnico }}</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Fecha y Hora</label>
+              <input type="datetime-local" class="form-control" formControlName="fechaHora" />
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar Registro</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="nuevaTomaModal" tabindex="-1" aria-labelledby="nuevaTomaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="nuevaTomaModalLabel">Agregar Nueva Toma de Muestra</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <form [formGroup]="nuevaTomaForm" (ngSubmit)="guardarNuevaToma()">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Paciente</label>
+              <input type="text" class="form-control" formControlName="paciente" placeholder="Nombre del paciente" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Doctor</label>
+              <input type="text" class="form-control" formControlName="doctor" placeholder="Doctor solicitante" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Tipo de Examen</label>
+              <input type="text" class="form-control" formControlName="tipoExamen" placeholder="Ej: Hemograma, Orina" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Fecha Solicitud</label>
+              <input type="date" class="form-control" formControlName="fecha" />
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="container mt-4">
+  <h3 class="mb-3 text-danger">Órdenes Canceladas</h3>
+
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>ID Orden</th>
+          <th>Paciente</th>
+          <th>Doctor</th>
+          <th>Tipo de Orden</th>
+          <th>Fecha Solicitud</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let orden of ordenes">
+          <td>{{ orden.id }}</td>
+          <td>{{ orden.paciente }}</td>
+          <td>{{ orden.doctor }}</td>
+          <td>{{ orden.tipoOrden }}</td>
+          <td>{{ orden.fechaSolicitud }}</td>
+          <td><span class="badge bg-danger">{{ orden.estado }}</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button class="btn btn-secondary mt-3" routerLink="/menu/ordenes">
+    <i class="bx bx-arrow-back me-1"></i> Volver a Órdenes
+  </button>
+</div>

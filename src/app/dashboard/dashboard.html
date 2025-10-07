@@ -1,0 +1,182 @@
+<div class="container dashboard-container">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-5 g-3">
+
+        <!-- Pacientes Registrados -->
+        <div class="col">
+            <div class="card card-animate">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <p class="fw-medium text-muted mb-0">Pacientes Registrados</p>
+                            <h2 class="mt-4 ff-secondary fw-semibold">
+                                <span class="counter-value" data-target="559.25">3</span>
+                            </h2>
+                            <p class="mb-0 text-muted">
+                                <span class="badge bg-light text-success mb-0">
+                                    <i class="ri-arrow-up-line align-middle"></i>
+                                </span> pacientes
+                            </p>
+                        </div>
+                        <div>
+                            <div class="avatar-sm flex-shrink-0">
+                                <span class="avatar-title bg-soft-success rounded-circle fs-2">
+                                    <i class="bx bx-user text-success"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Citas Programadas -->
+        <div class="col">
+            <div class="card card-animate">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <p class="fw-medium text-muted mb-0">Citas Programadas</p>
+                            <h2 class="mt-4 ff-secondary fw-semibold">
+                                <span class="counter-value" data-target="36894">50</span>
+                            </h2>
+                            <p class="mb-0 text-muted">
+                                <span class="badge bg-light text-success mb-0">
+                                    <i class="ri-arrow-up-line align-middle"></i>
+                                </span> citas
+                            </p>
+                        </div>
+                        <div>
+                            <div class="avatar-sm flex-shrink-0">
+                                <span class="avatar-title bg-soft-info rounded-circle fs-2">
+                                    <i class="bx bx-calendar text-info"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exámenes Realizados -->
+        <div class="col">
+            <div class="card card-animate">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <p class="fw-medium text-muted mb-0">Exámenes Realizados</p>
+                            <h2 class="mt-4 ff-secondary fw-semibold">
+                                <span class="counter-value" data-target="183.35">100</span>
+                            </h2>
+                            <p class="mb-0 text-muted">
+                                <span class="badge bg-light text-success mb-0">
+                                    <i class="ri-arrow-up-line align-middle"></i>
+                                </span> examenes resueltos
+                            </p>
+                        </div>
+                        <div>
+                            <div class="avatar-sm flex-shrink-0">
+                                <span class="avatar-title bg-soft-warning rounded-circle fs-2">
+                                    <i class="bx bx-test-tube text-warning"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resultados Entregados -->
+        <div class="col">
+            <div class="card card-animate">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <p class="fw-medium text-muted mb-0">Resultados Entregados</p>
+                            <h2 class="mt-4 ff-secondary fw-semibold">
+                                <span class="counter-value" data-target="165.89">90</span>
+                            </h2>
+                            <p class="mb-0 text-muted">
+                                <span class="badge bg-light text-success mb-0">
+                                    <i class="ri-arrow-up-line align-middle"></i>
+                                </span> resultados entregados
+                            </p>
+                        </div>
+                        <div>
+                            <div class="avatar-sm flex-shrink-0">
+                                <span class="avatar-title bg-soft-primary rounded-circle fs-2">
+                                    <i class="bx bx-file text-primary"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exámenes Pendientes -->
+        <div class="col">
+            <div class="card card-animate">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <p class="fw-medium text-muted mb-0">Exámenes Pendientes</p>
+                            <h2 class="mt-4 ff-secondary fw-semibold">
+                                <span class="counter-value" data-target="165.89">10</span>
+                            </h2>
+                            <p class="mb-0 text-muted">
+                                <span class="badge bg-light text-danger mb-0">
+                                    <i class="ri-arrow-down-line align-middle"></i>
+                                </span> examenes pendientes
+                            </p>
+                        </div>
+                        <div>
+                            <div class="avatar-sm flex-shrink-0">
+                                <span class="avatar-title bg-soft-danger rounded-circle fs-2">
+                                    <i class="bx bx-time-five text-danger"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- row -->
+
+    <!-- New row for shortcuts and calendar -->
+    <div class="row mt-3 g-3">
+        <!-- Atajos Rápidos -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card card-animate">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Atajos Rápidos</h5>
+                    <button class="btn btn-primary w-100 mb-2" (click)="onShortcutClick('Registrar Nuevo Paciente')">Registrar Nuevo Paciente</button>
+                    <button class="btn btn-primary w-100 mb-2" (click)="onShortcutClick('Ver Ordenes')">Ver Ordenes</button>
+                    <button class="btn btn-primary w-100" (click)="onShortcutClick('Administrar Usuarios')">Administrar Usuarios</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actividad del Mes -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card card-animate">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Actividad del Mes</h5>
+                    <div class="calendar">
+                        <div class="calendar-header d-flex justify-content-between align-items-center mb-2">
+                            <button class="btn btn-sm btn-outline-primary" (click)="prevMonth()"><</button>
+                            <div>{{ monthNames[currentMonth] }} {{ currentYear }}</div>
+                            <button class="btn btn-sm btn-outline-primary" (click)="nextMonth()">></button>
+                        </div>
+                        <div class="calendar-grid">
+                            <div class="calendar-day calendar-day-header" *ngFor="let day of weekDays">{{ day }}</div>
+                            <div class="calendar-day" *ngFor="let day of calendarDays" [class.today]="isToday(day)" [class.has-activity]="hasActivity(day)">
+                                {{ day.getDate() }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- new row -->
+</div> <!-- container -->
